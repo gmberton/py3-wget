@@ -12,20 +12,55 @@ license = {file = "LICENSE"}
 authors = [
     {name = "Gabriele Berton", email = "bertongabri@gmail.com"}
 ]
+keywords = [
+    "download",
+    "wget",
+    "http",
+    "https",
+    "progress-bar",
+    "file-transfer",
+    "retry",
+    "checksum"
+]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.0",
+    "Programming Language :: Python :: 3.1",
+    "Programming Language :: Python :: 3.2",
+    "Programming Language :: Python :: 3.3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Utilities",
+    "Topic :: System :: Networking",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: File Transfer Protocol (FTP)",
+    "Topic :: System :: Archiving :: Backup",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Communications :: File Sharing",
+    "License :: OSI Approved :: MIT License",
+    "Typing :: Typed"
 ]
 dependencies = [
     "tqdm",
 ]
+
+[project.urls]
+Homepage = "https://github.com/gabrieleberton/py3-wget"
+Documentation = "https://github.com/gabrieleberton/py3-wget#readme"
+Repository = "https://github.com/gabrieleberton/py3-wget.git"
+Issues = "https://github.com/gabrieleberton/py3-wget/issues"
+Changelog = "https://github.com/gabrieleberton/py3-wget/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
@@ -48,6 +83,20 @@ line-length = 120
 [tool.isort]
 profile = "black"
 multi_line_output = 3
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
 
 [tool.setuptools.dynamic]
 version = {attr = "py3_wget.__version__.__version__"} 
