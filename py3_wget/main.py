@@ -184,8 +184,8 @@ def validate_download_params(
     if not isinstance(block_size_bytes, int) or block_size_bytes <= 0:
         raise ValueError("The block_size_bytes parameter must be a positive integer.")
 
-    if not isinstance(retry_seconds, int) or retry_seconds <= 0:
-        raise ValueError("The retry_seconds parameter must be a positive integer.")
+    if not (isinstance(retry_seconds, float) or isinstance(retry_seconds, int)) or retry_seconds <= 0:
+        raise ValueError("The retry_seconds parameter must be a positive int or float.")
 
-    if not isinstance(timeout_seconds, int) or timeout_seconds <= 0:
-        raise ValueError("The timeout_seconds parameter must be a positive integer.")
+    if not (isinstance(timeout_seconds, float) or isinstance(timeout_seconds, int)) or timeout_seconds <= 0:
+        raise ValueError("The timeout_seconds parameter must be a positive int or float.")
