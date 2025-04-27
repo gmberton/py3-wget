@@ -3,26 +3,28 @@ import re
 import time
 import shutil
 import hashlib
+from typing import Optional, Union, Tuple, Dict
 from tqdm import tqdm
 from pathlib import Path
 from urllib.request import urlopen
+from urllib.response import addinfourl
 
 from .cksum import compute_cksum
 
 
 def download_file(
-    url,
-    output_path=None,
-    overwrite=False,
-    verbose=True,
-    cksum=None,
-    md5=None,
-    sha256=None,
-    max_tries=5,
-    block_size_bytes=8192,
-    retry_seconds=2,
-    timeout_seconds=60,
-):
+    url: str,
+    output_path: Optional[Union[str, Path]] = None,
+    overwrite: bool = False,
+    verbose: bool = True,
+    cksum: Optional[int] = None,
+    md5: Optional[str] = None,
+    sha256: Optional[str] = None,
+    max_tries: int = 5,
+    block_size_bytes: int = 8192,
+    retry_seconds: Union[int, float] = 2,
+    timeout_seconds: Union[int, float] = 60,
+) -> None:
     """Download a file from a URL with retry and checksum validation.
 
     Parameters
@@ -45,9 +47,9 @@ def download_file(
         Maximum retry attempts if the download fails. Default is 5.
     block_size_bytes : int, optional
         Size of data blocks for download in bytes. Default is 8192.
-    retry_seconds : int, optional
+    retry_seconds : int or float, optional
         Initial retry wait time in seconds. Wait increases exponentially on each failure. Default is 2.
-    timeout_seconds : int, optional
+    timeout_seconds : int or float, optional
         Timeout for the download request in seconds. Default is 60.
 
     Raises
@@ -105,7 +107,11 @@ def download_file(
     validate_cksums(output_path, cksum, md5, sha256)
 
 
-def _get_output_path(headers, url, output_path):
+def _get_output_path(
+    headers: Dict[str, str],
+    url: str,
+    output_path: Optional[Union[str, Path]]
+) -> Tuple[str, str]:
     if output_path is None:
         if "content-disposition" not in headers:
             output_path = os.path.basename(url)
@@ -120,7 +126,14 @@ def _get_output_path(headers, url, output_path):
     return output_path, partial_filename
 
 
-def _download(response, output_path, total_size, partial_filename, verbose, block_size_bytes):
+def _download(
+    response: addinfourl,
+    output_path: str,
+    total_size: int,
+    partial_filename: str,
+    verbose: bool,
+    block_size_bytes: int
+) -> None:
     tqdm_bar = tqdm(
         total=total_size, desc=os.path.basename(output_path), unit="iB", unit_scale=True, disable=not verbose
     )
@@ -134,7 +147,12 @@ def _download(response, output_path, total_size, partial_filename, verbose, bloc
         tqdm_bar.close()
 
 
-def validate_cksums(output_path, cksum, md5, sha256):
+def validate_cksums(
+    output_path: str,
+    cksum: Optional[int],
+    md5: Optional[str],
+    sha256: Optional[str]
+) -> None:
     if cksum is not None:
         with open(output_path, "rb") as file:
             computed_cksum = compute_cksum(file)
@@ -155,8 +173,18 @@ def validate_cksums(output_path, cksum, md5, sha256):
 
 
 def validate_download_params(
-    url, output_path, overwrite, verbose, cksum, md5, sha256, max_tries, block_size_bytes, retry_seconds, timeout_seconds
-):
+    url: str,
+    output_path: Optional[Union[str, Path]],
+    overwrite: bool,
+    verbose: bool,
+    cksum: Optional[int],
+    md5: Optional[str],
+    sha256: Optional[str],
+    max_tries: int,
+    block_size_bytes: int,
+    retry_seconds: Union[int, float],
+    timeout_seconds: Union[int, float]
+) -> None:
     if not isinstance(url, str) or not url.startswith(("http://", "https://")):
         raise ValueError("The URL must be a string starting with 'http://' or 'https://'.")
 
