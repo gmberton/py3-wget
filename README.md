@@ -1,46 +1,107 @@
-# py3_wget
+# py3-wget
 
-A tool like wget for python, supporting a (optional) progress bar, cksum, timeout, retry failed download.
+A Python library for downloading files with support for progress bars, checksum verification, timeout handling, and automatic retry on failed downloads.
 
-### Basic example
-![Demo](assets/e1.gif)
+## Features
 
-### Recovering from download errors
-If errors occur, py3_wget re-runs the download
+- 📊 Progress bar visualization (optional)
+- 🔄 Automatic retry on failed downloads
+- 🔍 Checksum verification (cksum, MD5, SHA256)
+- ⏱️ Configurable timeout and retry settings
+- 🛡️ Safe file handling with overwrite protection
+- 📦 Simple and intuitive API
 
-### Overwrite
-Already existing files won't be downloaded by default
-![Demo](assets/e3.gif)
+## Installation
 
-### Cksum, MD5, SHA256
-py3_wget can automatically check the correctness of the download through cksum, MD5 or SHA256
-![Demo](assets/e4.gif)
-
-## Install
-Install with
-```
-pip install py3_wget
+```bash
+pip install py3-wget
 ```
 
-## Parameters
+## Quick Start
+
+### Basic Download
+```python
+from py3_wget import download_file
+
+# Simple download with progress bar
+download_file("https://example.com/file.zip")
 ```
-py3_wget.download_file(
-    url,
-    output_path=None,
-    overwrite=False,
-    verbose=True,
-    cksum=None,
-    md5=None,
-    sha256=None,
-    max_tries=5,
-    block_size_bytes=8192,
-    retry_seconds=2,
-    timeout_seconds=60,
+
+![Basic Download Demo](assets/e1.gif)
+
+### Advanced Usage
+
+#### Retry on Failure
+The library automatically retries failed downloads with exponential backoff:
+```python
+download_file(
+    "https://example.com/large-file.zip",
+    max_tries=5,  # Maximum number of retry attempts
+    retry_seconds=2  # Initial retry delay in seconds
 )
 ```
 
-### TODO list
-- [ ] Optionally resume from partial download
-- [x] Optionally pass cksum to downloader to ensure file is correctly downloaded
-- [x] Optionally turn off tqdm (silent download)
-- [x] Optionally set timeout for download request
+#### Checksum Verification
+Verify downloaded files using checksums:
+```python
+download_file(
+    "https://example.com/important-file.zip",
+    md5="d41d8cd98f00b204e9800998ecf8427e",  # MD5 checksum
+    sha256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"  # SHA256 checksum
+)
+```
+
+![Checksum Verification Demo](assets/e4.gif)
+
+#### File Overwrite Control
+```python
+download_file(
+    "https://example.com/file.zip",
+    output_path="downloads/file.zip",
+    overwrite=True  # Overwrite existing file
+)
+```
+
+![Overwrite Demo](assets/e3.gif)
+
+## API Reference
+
+### `download_file`
+
+```python
+download_file(
+    url: str,
+    output_path: Optional[Union[str, Path]] = None,
+    overwrite: bool = False,
+    verbose: bool = True,
+    cksum: Optional[int] = None,
+    md5: Optional[str] = None,
+    sha256: Optional[str] = None,
+    max_tries: int = 5,
+    block_size_bytes: int = 8192,
+    retry_seconds: Union[int, float] = 2,
+    timeout_seconds: Union[int, float] = 60,
+) -> None
+```
+
+#### Parameters
+
+- `url` (str): URL of the file to download
+- `output_path` (str or Path, optional): Path to save the file. If None, derived from URL
+- `overwrite` (bool): Overwrite existing file (default: False)
+- `verbose` (bool): Show progress bar and messages (default: True)
+- `cksum` (int, optional): Expected checksum value
+- `md5` (str, optional): Expected MD5 hash
+- `sha256` (str, optional): Expected SHA256 hash
+- `max_tries` (int): Maximum retry attempts (default: 5)
+- `block_size_bytes` (int): Download block size in bytes (default: 8192)
+- `retry_seconds` (int/float): Initial retry delay in seconds (default: 2)
+- `timeout_seconds` (int/float): Download timeout in seconds (default: 60)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
