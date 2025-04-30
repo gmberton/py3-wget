@@ -72,7 +72,7 @@ def download_file(
     else:
         printf = print
 
-    for num_attempt in range(max_tries):  # In case of errors, re-try up to 'max_tries' times
+    for num_attempt in range(max_tries - 1):  # In case of errors, re-try up to 'max_tries' times
         try:
             with urlopen(url, timeout=timeout_seconds) as response:
                 headers = response.headers
