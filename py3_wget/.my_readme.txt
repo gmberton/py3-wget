@@ -8,3 +8,8 @@ nano py3_wget/__init__.py
 python3 setup.py sdist bdist_wheel
 twine upload dist/* --verbose
 ```
+
+To run tests
+```
+pytest --cov=py3_wget --cov-report=xml
+```

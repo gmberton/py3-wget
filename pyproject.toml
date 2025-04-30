@@ -56,11 +56,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/gabrieleberton/py3-wget"
-Documentation = "https://github.com/gabrieleberton/py3-wget#readme"
-Repository = "https://github.com/gabrieleberton/py3-wget.git"
-Issues = "https://github.com/gabrieleberton/py3-wget/issues"
-Changelog = "https://github.com/gabrieleberton/py3-wget/blob/main/CHANGELOG.md"
+Repository = "https://github.com/gmberton/py3-wget"
 
 [project.optional-dependencies]
 dev = [

@@ -1,14 +1,15 @@
 # py3-wget
 
-A Python library for downloading files with support for progress bars, checksum verification, timeout handling, and automatic retry on failed downloads.
+A Python library for downloading files of any size, especially optimized for large file downloads, with support for progress bars, checksum verification, timeout handling, and automatic retry on failed downloads.
 
 ## Features
 
+- 🚀 Optimized for large file downloads
 - 📊 Progress bar visualization (optional)
 - 🔄 Automatic retry on failed downloads
-- 🔍 Checksum verification (cksum, MD5, SHA256)
+- 🔍 Optional integrity checks (cksum, MD5, SHA256)
 - ⏱️ Configurable timeout and retry settings
-- 🛡️ Safe file handling with overwrite protection
+- 🛡️ Safe file handling, optional overwrite
 - 📦 Simple and intuitive API
 
 ## Installation
@@ -24,7 +25,7 @@ pip install py3-wget
 from py3_wget import download_file
 
 # Simple download with progress bar
-download_file("https://example.com/file.zip")
+download_file("https://example.com/test.txt")
 ```
 
 ![Basic Download Demo](assets/e1.gif)
@@ -35,7 +36,7 @@ download_file("https://example.com/file.zip")
 The library automatically retries failed downloads with exponential backoff:
 ```python
 download_file(
-    "https://example.com/large-file.zip",
+    "https://example.com/test.txt",
     max_tries=5,  # Maximum number of retry attempts
     retry_seconds=2  # Initial retry delay in seconds
 )
@@ -45,9 +46,9 @@ download_file(
 Verify downloaded files using checksums:
 ```python
 download_file(
-    "https://example.com/important-file.zip",
-    md5="d41d8cd98f00b204e9800998ecf8427e",  # MD5 checksum
-    sha256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"  # SHA256 checksum
+    "https://raw.githubusercontent.com/python/cpython/3.11/LICENSE",
+    md5="fcf6b249c2641540219a727f35d8d2c2",  # MD5 checksum
+    sha256="3aff1954277c4fc27603346901e4848b58fe3c8bed63affe6086003dd6c2b9fe"  # SHA256 checksum
 )
 ```
 
@@ -56,8 +57,8 @@ download_file(
 #### File Overwrite Control
 ```python
 download_file(
-    "https://example.com/file.zip",
-    output_path="downloads/file.zip",
+    "https://example.com/test.txt",
+    output_path="downloads/test.bin",
     overwrite=True  # Overwrite existing file
 )
 ```
