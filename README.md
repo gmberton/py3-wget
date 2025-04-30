@@ -25,7 +25,7 @@ pip install py3-wget
 from py3_wget import download_file
 
 # Simple download with progress bar
-download_file("https://example.com/test.txt")
+download_file("https://raw.githubusercontent.com/python/cpython/3.11/LICENSE")
 ```
 
 ![Basic Download Demo](assets/e1.gif)
@@ -36,7 +36,7 @@ download_file("https://example.com/test.txt")
 The library automatically retries failed downloads with exponential backoff:
 ```python
 download_file(
-    "https://example.com/test.txt",
+    "https://raw.githubusercontent.com/python/cpython/3.11/LICENSE",
     max_tries=5,  # Maximum number of retry attempts
     retry_seconds=2  # Initial retry delay in seconds
 )
@@ -57,7 +57,7 @@ download_file(
 #### File Overwrite Control
 ```python
 download_file(
-    "https://example.com/test.txt",
+    "https://raw.githubusercontent.com/python/cpython/3.11/LICENSE",
     output_path="downloads/test.bin",
     overwrite=True  # Overwrite existing file
 )
