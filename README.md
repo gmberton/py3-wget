@@ -11,6 +11,7 @@ A Python library for downloading files of any size, especially optimized for lar
 - ⏱️ Configurable timeout and retry settings
 - 🛡️ Safe file handling, optional overwrite
 - 📦 Simple and intuitive API
+- 💻 Cross-platform compatibility (works on any OS)
 
 ## Installation
 
